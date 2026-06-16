@@ -1,13 +1,13 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 # image will be published to ghcr.io/<user>/<name>
-name: template
+name: EpopeyaOS
 # description will be included in the image's metadata
 description: This is my personal OS image.
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 42 # latest is also supported if you want new updates ASAP
+base-image: ghcr.io/ublue-os/silverblue-nvidia
+image-version: latest # latest is also supported if you want new updates ASAP
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
@@ -23,8 +23,12 @@ modules:
         - atim/starship
     install:
       packages:
-        - micro
         - starship
+        - fastfetch
+        - wine
+        - neovim
+        - tree-sitter-cli
+        - steam-devices
     remove:
       packages:
         # example: removing firefox (in favor of the flatpak)
@@ -40,6 +44,27 @@ modules:
         install: # system flatpaks we want all users to have and not remove
           - org.mozilla.firefox
           - org.gnome.Loupe
+          - com.valvesoftware.Steam
+          - com.discordapp.Discord
+          - com.spotify.Client
+          - org.vinegarhq.Sober
+          - org.prismlauncher.PrismLauncher
       - scope: user # Also add Flathub user repo, but no user packages
+  
+  - type: script
+    snippets:
+      - |
+        echo "Añadiendo repositorio de Microsoft VSCode..."
+        rpm --import https://packages.microsoft.com/keys/microsoft.asc
+        cat <<EOF > /etc/yum.repos.d/vscode.repo
+        [code]
+        name=Visual Studio Code
+        baseurl=https://packages.microsoft.com/yumrepos/vscode
+        enabled=1
+        gpgcheck=1
+        gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+        EOF
+        echo "Instalando VSCode..."
+        dnf install -y code
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully

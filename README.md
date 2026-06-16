@@ -41,3 +41,20 @@ These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](ht
 ```bash
 cosign verify --key cosign.pub ghcr.io/blue-build/template
 ```
+
+## Local Build
+
+If you want to test and develop your image locally without relying on GitHub Actions, you can use the `blue-build` CLI utility:
+
+- To compile and build the custom image locally
+  ```
+  bluebuild build ./recipes/recipe.yml
+  ```
+- To create the Containerfile
+  ```
+  bluebuild generate ./recipes/recipe.yml -o Containerfile
+  ```
+- To access the image locally
+  ```
+  podman run -it --rm epopeyaos:latest /usr/bin/bash
+  ```
