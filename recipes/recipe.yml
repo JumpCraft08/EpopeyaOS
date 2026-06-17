@@ -30,12 +30,6 @@ modules:
         - neovim
         - tree-sitter-cli
         - steam-devices
-    remove:
-      packages:
-        # example: removing firefox (in favor of the flatpak)
-        # "firefox" is the main package, "firefox-langpacks" is a dependency
-        - firefox
-        - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
 
   - type: default-flatpaks
     configurations:
@@ -43,7 +37,6 @@ modules:
         scope: system
         # If no repo information is specified, Flathub will be used by default
         install: # system flatpaks we want all users to have and not remove
-          - org.mozilla.firefox
           - org.gnome.Loupe
           - com.valvesoftware.Steam
           - com.discordapp.Discord
@@ -73,5 +66,12 @@ modules:
         EOF
         echo "Instalando VSCode..."
         dnf install -y code
+
+  - type: gnome-extensions
+    install:
+      - 3193 # Blur my Shell
+      - 307 # Dash to Dock
+      - 1460 # Vitals
+      - 2087 # Desktop Icons NG (DING)
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
