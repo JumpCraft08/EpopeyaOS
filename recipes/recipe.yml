@@ -6,7 +6,7 @@ name: epopeyaos
 description: EpopeyaOS - This is my personal OS image.
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: ghcr.io/ublue-os/silverblue-nvidia
+base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest # latest is also supported if you want new updates ASAP
 
 # module configuration, executed in order
@@ -17,18 +17,16 @@ modules:
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
+  - type: akmods
+    base: main
+    nvidia-driver: nvidia-open
+    install: []
+
   - type: dnf
-    repos:
-      copr:
-        - atim/starship
     install:
       packages:
-        - starship
-        - fastfetch
         - wine
         - wine-mono
-        - neovim
-        - tree-sitter-cli
         - steam-devices
 
   - type: default-flatpaks
@@ -69,9 +67,10 @@ modules:
 
   - type: gnome-extensions
     install:
-      - 3193 # Blur my Shell
       - 307 # Dash to Dock
       - 1460 # Vitals
       - 2087 # Desktop Icons NG (DING)
+      - 7065 # Tiling Shell
+      - 1262 # Bing Wallpaper 
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
