@@ -26,6 +26,7 @@ modules:
         - starship
         - fastfetch
         - wine
+        - wine-mono
         - neovim
         - tree-sitter-cli
         - steam-devices
@@ -49,6 +50,12 @@ modules:
           - com.spotify.Client
           - org.vinegarhq.Sober
           - org.prismlauncher.PrismLauncher
+          - net.lutris.Lutris
+          - io.podman_desktop.PodmanDesktop
+          - com.jetbrains.IntelliJ-IDEA-Community
+          - com.jetbrains.CLion
+          - com.jetbrains.WebStorm
+          - com.jetbrains.DataGrip
       - scope: user # Also add Flathub user repo, but no user packages
   
   - type: script
